@@ -2,27 +2,35 @@ import React from "react";
 import { connect } from "react-redux";
 import { addNomination, deleteNomination } from "../reducers/actions";
 
-const Movie = ({ Movie, nominations_indexes }) => {
-  const {
-    addNomination,
-    deleteNomination,
-    Title,
-    Year,
-    Poster,
-    Type,
-    imdbID
-  } = Movie;
+const Movie = ({
+  Movie,
+  addNomination,
+  deleteNomination,
+  nominations_indexes
+}) => {
+  const { Title, Year, Poster, Type, imdbID } = Movie;
 
   return (
     <div>
       <h1>{Title}</h1>
       <img src={Poster} />
       {nominations_indexes[imdbID] === 1 ? (
-        <button onClick={() => deleteNomination(Movie)}>
+        <button
+          onClick={() => {
+            deleteNomination(Movie);
+          }}
+        >
           Delete Nomination{" "}
         </button>
       ) : (
-        <button onClick={() => addNomination(Movie)}> Add Nomination </button>
+        <button
+          onClick={() => {
+            addNomination(Movie);
+          }}
+        >
+          {" "}
+          Add Nomination{" "}
+        </button>
       )}
     </div>
   );

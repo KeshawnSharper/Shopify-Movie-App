@@ -24,21 +24,32 @@ export function addNomination(movie) {
   // else
   // * set the local storage nominations list to the previous list plus the wanted movie
   else {
-    localStorage.setItem(
-      "nominations",
-      JSON.stringify([
-        ...JSON.parse(localStorage.getItem("nominations")),
-        movie
-      ])
-    );
-    // Store all of the ids inside of an object to track if it's in the nominations already
-    localStorage.setItem(
-      "nominations_indexes",
-      JSON.stringify({
-        ...JSON.parse(localStorage.getItem("nominations_indexes")),
-        [movie.imdbID]: 1
-      })
-    );
+    console.log(movie);
+    if (!localStorage.getItem("nominations")) {
+      localStorage.setItem("nominations", JSON.stringify([movie]));
+      localStorage.setItem(
+        "nominations_indexes",
+        JSON.stringify({
+          [movie.imdbID]: 1
+        })
+      );
+    } else {
+      localStorage.setItem(
+        "nominations",
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem("nominations")),
+          movie
+        ])
+      );
+      // Store all of the ids inside of an object to track if it's in the nominations already
+      localStorage.setItem(
+        "nominations_indexes",
+        JSON.stringify({
+          ...JSON.parse(localStorage.getItem("nominations_indexes")),
+          [movie.imdbID]: 1
+        })
+      );
+    }
     localStorage.setItem("total", Number(localStorage.getItem("total")) + 1);
     return (dispatch) => {
       dispatch({ type: "ADD_NOMINATIONS", nominations: movie });
