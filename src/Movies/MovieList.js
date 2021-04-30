@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import Movie from "./Movie";
-import { searchMovies } from "../reducers/reducer";
+import { searchMovies } from "../reducers/actions";
+
 function MovieList({ searchMovies, results, fav_movies, isLoading }) {
   const [movies, setMovies] = useState(true);
   const [value, setValue] = useState("");
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    searchMovies(value);
+  };
   return (
     <div className="App">
-      <input value={value} onChange={(e) => searchMovies(e.target.value)} />
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <input value={value} onChange={(e) => handleChange(e)} />
+      {results.map((result) => (
+        <Movie Movie={result} />
+      ))}
     </div>
   );
 }
